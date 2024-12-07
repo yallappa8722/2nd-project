@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Image Slider</title>
+  <style>
+    /* Slider Container */
+    .slider {
+      position: relative;
+      width: 100%;
+      max-width: 800px;
+      margin: auto;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+
+    /* Images */
+    .slides {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+    .slides img {
+      width: 100%;
+      flex-shrink: 0;
+    }
+
+    /* Navigation Controls */
+    .navigation {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+    }
+    .navigation button {
+      background-color: rgba(0, 0, 0, 0.5);
+      border: none;
+      color: white;
+      font-size: 18px;
+      padding: 10px 15px;
+      cursor: pointer;
+      border-radius: 50%;
+    }
+    .navigation button:hover {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    /* Thumbnail Row */
+    .thumbnails {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+    }
+    .thumbnails img {
+      width: 80px;
+      margin: 5px;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.3s;
+    }
+    .thumbnails img:hover {
+      opacity: 1;
+    }
+
+    /* Caption */
+    .caption {
+      text-align: center;
+      margin-top: 10px;
+      font-family: Arial, sans-serif;
+      color: #333;
+    }
+
+    /* Responsiveness */
+    @media (max-width: 600px) {
+      .slides img {
+        height: 200px;
+        object-fit: cover;
+      }
+      .thumbnails img {
+        width: 50px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Slider Container -->
+  <div class="slider">
+    <div class="slides">
+      <img src="image1.jpg" alt="Image 1">
+      <img src="image2.jpg" alt="Image 2">
+      <img src="image3.jpg" alt="Image 3">
+    </div>
+    <div class="navigation">
+      <button onclick="prevSlide()">&#10094;</button>
+      <button onclick="nextSlide()">&#10095;</button>
+    </div>
+  </div>
+
+  <!-- Thumbnails -->
+  <div class="thumbnails">
+    <img src="image1.jpg" alt="Thumbnail 1" onclick="goToSlide(0)">
+    <img src="image2.jpg" alt="Thumbnail 2" onclick="goToSlide(1)">
+    <img src="image3.jpg" alt="Thumbnail 3" onclick="goToSlide(2)">
+  </div>
+
+  <!-- Caption -->
+  <div class="caption" id="caption">
+    Caption for Image 1
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    const slides = document.querySelector('.slides');
+    const captions = [
+      'A tranquil forest scene with sunbeams breaking through the dense canopy, creating a mesmerizing play of light and shadow.',
+      'The first rays of dawn light up the peaks of a snow-capped mountain, painting the sky in shades of pink and gold.',
+      'A serene river meanders through lush greenery, reflecting the vibrant colors of the surrounding landscape.'
+    ];
+    let currentIndex = 0;
+
+    function updateSlider() {
+      slides.style.transform = `translateX(-${currentIndex * 100}%)`;
+      document.getElementById('caption').innerText = captions[currentIndex];
+    }
+
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % captions.length;
+      updateSlider();
+    }
+
+    function prevSlide() {
+      currentIndex = (currentIndex - 1 + captions.length) % captions.length;
+      updateSlider();
+    }
+
+    function goToSlide(index) {
+      currentIndex = index;
+      updateSlider();
+    }
+  </script>
+
+</body>
+</html>
+
